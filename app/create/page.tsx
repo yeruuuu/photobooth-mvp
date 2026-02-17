@@ -1,8 +1,15 @@
 'use client';
 
 import CameraCapture from '@/components/CameraCapture';
+import BackgroundRemoval from '@/components/BackgroundRemoval';
+import { useState } from 'react';
+
+type Step = 'capture' | 'remove-bg';
 
 export default function CreatePage() {
+  const [step, setStep] = useState<Step>('capture');
+  const [capturedImage, setCapturedImage] = useState<string>('')
+
   return (
     <main className="h-[100dvh] overflow-hidden bg-[#660710]">
       <div className="h-full flex flex-col items-center justify-center px-4">
@@ -14,7 +21,24 @@ export default function CreatePage() {
             Two places. One frame.
           </p>
 
-          <CameraCapture />
+          {step === 'capture' && (
+            <CameraCapture
+              onCapture={(imageUrl) => {
+                setCapturedImage(imageUrl);
+                setStep('remove-bg')
+             }}
+            />
+          )}
+
+          {step === 'remove-bg' && (
+            <BackgroundRemoval
+              imageUrl={capturedImage}
+              onComplete={(cutoutUrl) => {
+                console.log('Cutout ready:', cutoutUrl);
+              }}
+              onBack={() => setStep('capture')}
+            />
+          )}
         </div>
       </div>
     </main>

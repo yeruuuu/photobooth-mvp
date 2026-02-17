@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@imgly/background-removal": "^1.7.0",
+    "@imgly/background-removal-data": "^1.4.5",
     "@supabase/supabase-js": "^2.95.3",
     "bcryptjs": "^3.0.3",
     "nanoid": "^5.1.6",
